@@ -1,6 +1,7 @@
 OPENAI_API_KEY: sk-YOURAPIKEY
+GEMINI_API_KEY: AIzaSyDaYZRygr9zTGC73Msuh5iypRsn1sPxKMQ
 history_file: chat_history.json
-model: "gpt-4.1-mini"
+model: "gemini-2.0-flash"
 presets:
   default:
     system_prompt: |
@@ -10,7 +11,15 @@ presets:
 
 sovits_ping_config:
   text_lang: en
-  prompt_lang : en
-  ref_audio_path : D:\PyProjects\waifu_project\riko_project\character_files\main_sample.wav
-  prompt_text : This is a sample voice for you to just get started with because it sounds kind of cute but just make sure this doesn't have long silences.
+  prompt_lang: en
+  ref_audio_path: riko_voice.wav
+  prompt_text: This is a sample voice for you to just get started with because it sounds kind of cute but just make sure this doesn't have long silences.
+  # Optimized settings for better quality and speed
+  top_k: 15          # Lower = faster, more stable
+  top_p: 1.0         # Keep at 1.0 for quality
+  temperature: 1.0   # Balanced between quality and speed
+  speed_factor: 1.1  # Slightly faster speech
+  batch_size: 1      # For real-time generation
+  precision: "float16"  # Faster inference
+  stream_chunk_size: 1024  # Smaller chunks for lower latency
   
