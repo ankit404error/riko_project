@@ -68,6 +68,9 @@ class VoiceActivityDetector:
         if len(frame) != self.frame_size:
             return False
             
+        # Clamp frame values to prevent overflow
+        frame = np.clip(frame, -1.0, 1.0)
+        
         # Convert to int16 for WebRTC VAD
         frame_int16 = (frame * 32767).astype(np.int16)
         frame_bytes = frame_int16.tobytes()
@@ -76,16 +79,16 @@ class VoiceActivityDetector:
             # WebRTC VAD
             vad_result = self.vad.is_speech(frame_bytes, self.sample_rate)
             
-            # Energy-based detection
-            energy = np.mean(frame ** 2)
+            # Energy-based detection (safe calculation)
+            energy = np.mean(np.abs(frame))  # Use absolute values to prevent overflow
             energy_result = energy > self.energy_threshold
             
             # Combine both methods
             return vad_result or energy_result
             
         except Exception as e:
-            # Fallback to energy-based only
-            energy = np.mean(frame ** 2)
+            # Fallback to energy-based only (safe calculation)
+            energy = np.mean(np.abs(frame))
             return energy > self.energy_threshold
     
     def process_frame(self, frame):
@@ -474,9 +477,12 @@ class AdvancedFourModeChat:
                 segments, info = self.whisper_model.transcribe(str(temp_file))
                 transcribed_text = " ".join([segment.text for segment in segments])
                 
-                if transcribed_text.strip():
-                    self.last_transcribed_text = transcribed_text.strip()
-                    self.add_chat_message("Transcribed", f'"{transcribed_text}"', "#ffff00")
+                # Clean the transcribed text
+                cleaned_text = self.clean_transcription_text(transcribed_text)
+                
+                if cleaned_text.strip():
+                    self.last_transcribed_text = cleaned_text.strip()
+                    self.add_chat_message("Transcribed", f'"{cleaned_text}"', "#ffff00")
                     self.update_status("Ready to train with transcribed text", "#00ff00")
                 else:
                     self.update_status("No speech detected in recording", "#ff8800")
@@ -557,6 +563,36 @@ class AdvancedFourModeChat:
         except Exception as e:
             self.update_status(f"Auto detection error: {e}", "#ff0000")
     
+    def clean_transcription_text(self, text):
+        """Clean up transcription text to remove artifacts and duplicated words"""
+        import re
+        
+        # Remove extra whitespace
+        text = re.sub(r'\s+', ' ', text.strip())
+        
+        # Remove common transcription artifacts
+        artifacts = ["You", "you", "Thank you.", "Thanks for watching!", "Bye", "Hello"]
+        
+        # Split into words and remove duplicates that appear at the end
+        words = text.split()
+        
+        # Remove trailing artifacts/duplicates
+        while words and words[-1] in artifacts:
+            words.pop()
+        
+        # Remove duplicate words at the end (like "You You" -> "You")
+        if len(words) >= 2 and words[-1] == words[-2]:
+            words.pop()
+            
+        # Join back and clean up
+        cleaned_text = ' '.join(words)
+        
+        # Final cleanup - remove standalone artifacts
+        if cleaned_text in artifacts:
+            return ""
+            
+        return cleaned_text
+    
     def process_detected_speech(self, audio_data):
         """Process automatically detected speech"""
         try:
@@ -569,11 +605,14 @@ class AdvancedFourModeChat:
                 segments, info = self.whisper_model.transcribe(str(temp_file))
                 transcribed_text = " ".join([segment.text for segment in segments])
                 
-                if transcribed_text.strip():
-                    self.add_chat_message("You", transcribed_text)
+                # Clean the transcribed text
+                cleaned_text = self.clean_transcription_text(transcribed_text)
+                
+                if cleaned_text.strip():
+                    self.add_chat_message("You", cleaned_text)
                     
                     # Get AI response
-                    self.root.after(0, lambda: self.process_ai_response(transcribed_text))
+                    self.root.after(0, lambda: self.process_ai_response(cleaned_text))
             
             # Clean up
             if temp_file.exists():
@@ -617,6 +656,33 @@ class AdvancedFourModeChat:
         # Process with AI
         self.process_ai_response(text)
     
+    def truncate_response_for_tts(self, text, max_length=200):
+        """Truncate response text for faster TTS generation"""
+        if len(text) <= max_length:
+            return text
+            
+        # Find the last complete sentence within the limit
+        truncated = text[:max_length]
+        
+        # Look for sentence endings
+        sentence_endings = ['.', '!', '?']
+        last_sentence_end = -1
+        
+        for ending in sentence_endings:
+            pos = truncated.rfind(ending)
+            if pos > last_sentence_end:
+                last_sentence_end = pos
+        
+        if last_sentence_end > 50:  # Ensure we have a reasonable amount of text
+            return truncated[:last_sentence_end + 1]
+        else:
+            # Fallback to word boundary
+            last_space = truncated.rfind(' ')
+            if last_space > 50:
+                return truncated[:last_space] + "..."
+            else:
+                return truncated + "..."
+    
     def process_ai_response(self, user_input):
         """Process user input and generate AI response"""
         try:
@@ -628,7 +694,7 @@ class AdvancedFourModeChat:
             # Filter emotions
             clean_text, emotions = self.emotion_filter.process_text(ai_response)
             
-            # Add to chat
+            # Add full response to chat
             self.add_chat_message("Riko", clean_text)
             
             # Show emotions
@@ -638,7 +704,11 @@ class AdvancedFourModeChat:
             
             # Generate voice if not in text-to-text mode
             if self.current_mode != 4 and clean_text.strip():
-                self.generate_and_play_voice(clean_text)
+                # Truncate for faster TTS
+                tts_text = self.truncate_response_for_tts(clean_text)
+                if len(tts_text) < len(clean_text):
+                    self.add_chat_message("System", f"[TTS shortened for speed: '{tts_text}']", "#888888")
+                self.generate_and_play_voice(tts_text)
             else:
                 self.update_status("Response complete", "#00ff00")
                 

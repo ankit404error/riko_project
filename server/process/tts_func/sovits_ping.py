@@ -56,14 +56,20 @@ def play_audio(path):
         # Apply audio enhancements
         enhanced_data = enhance_audio(data, samplerate)
         
-        # Play with optimized settings
+        # Play with optimized settings (fixed parameter issue)
         sd.play(enhanced_data, samplerate, 
                blocksize=AUDIO_BUFFER_SIZE,
-               latency='low',
-               dtype='float32')
+               latency='low')
         sd.wait()
     except Exception as e:
         print(f"Audio playback error: {e}")
+        # Fallback to simple playback
+        try:
+            data, samplerate = sf.read(path)
+            sd.play(data, samplerate)
+            sd.wait()
+        except Exception as e2:
+            print(f"Fallback audio playback also failed: {e2}")
 
 def async_play_audio(path):
     """Non-blocking audio playback"""
