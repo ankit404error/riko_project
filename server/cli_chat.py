@@ -33,7 +33,6 @@ try:
     from process.tts_func.sovits_ping import sovits_gen, play_audio
     from process.text_processing.emotion_filter import EmotionFilter
 except ImportError as e:
-    print(f"⚠️  Warning: Could not import module {e}")
     print("Some features may not work properly.")
 
 class VoiceActivityDetector:

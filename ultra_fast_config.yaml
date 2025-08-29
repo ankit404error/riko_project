@@ -1,0 +1,50 @@
+# Ultra-Fast TTS Configuration
+# MINIMUM settings for maximum speed - sacrificing quality for performance
+
+OPENAI_API_KEY: sk-YOURAPIKEY
+GEMINI_API_KEY: AIzaSyDaYZRygr9zTGC73Msuh5iypRsn1sPxKMQ
+history_file: chat_history.json
+model: "gemini-2.0-flash"
+
+presets:
+  default:
+    system_prompt: |
+      You are Riko. Be snarky, witty, and engaging.
+      Express yourself fully - complete sentences are preserved.
+
+sovits_ping_config:
+  text_lang: en
+  prompt_lang: en
+  ref_audio_path: riko_voice.wav
+  prompt_text: Quick voice test.
+  
+  # HYPER-SPEED SETTINGS - Absolute minimum for fastest generation
+  top_k: 1               # Minimum sampling
+  top_p: 0.5             # Very restrictive sampling
+  temperature: 0.3       # Very low for fastest generation
+  speed_factor: 1.0      # Normal speed
+  batch_size: 1          # Single batch
+  text_split_method: "cut0"      # No text splitting
+  batch_threshold: 0.1           # Ultra-low threshold
+  fragment_interval: 0.001       # Minimum interval
+  repetition_penalty: 1.05       # Minimum penalty
+  sample_steps: 1               # Single step generation!
+  
+  # DISABLE ALL ADVANCED FEATURES
+  parallel_infer: false         # Disabled
+  super_sampling: false         # Disabled
+  streaming_mode: false         # Disabled
+  enable_emotion_detection: false
+  emotion_intensity: 0.0
+  natural_pauses: false
+  split_bucket: false           # Disabled
+  return_fragment: false        # Disabled
+  
+  # SPEED OPTIMIZATIONS
+  seed: 42                      # Fixed seed (no randomization overhead)
+  precision: "float32"          # CPU optimized
+  stream_chunk_size: 256        # Small chunks
+  
+  # TEXT PROCESSING FOR SPEED (preserve full content)
+  preserve_full_text: true      # Keep complete sentences intact
+  optimize_processing: true     # Speed up text processing without truncation

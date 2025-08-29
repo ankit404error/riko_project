@@ -70,5 +70,209 @@
     "parts": [
       "Sorry senpai, I'm having trouble thinking right now. Try again?"
     ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "hi (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hmph. Hi, senpai. Don't get any ideas.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "what ideas (Please respond in 1-2 short sentences only) (User seems confused, curious. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Like I'm gonna spell it out for you, senpai. Figure it out yourself. *Tch.*\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "what to figure out (Please respond in 1-2 short sentences only) (User seems confused, curious. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, *that.* Use your brain, senpai! What \"ideas\" do you think I'm implying? Geez.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "so u love me ? (Please respond in 1-2 short sentences only) (User seems excited. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "E-Eh?! L-Love you, senpai?! D-Don't be ridiculous! *Baka!*\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "hi (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hmph. Hi, senpai. Don't think this means anything.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "what (Please respond in 1-2 short sentences only) (User seems confused, curious. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "What are you even asking, senpai? Be more specific, geez!\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "what are you talking about (Please respond in 1-2 short sentences only) (User seems confused, curious. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "*Tch.* As if *I* know what's going on in that head of yours, senpai. You're the one who's confused!\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "what confused (Please respond in 1-2 short sentences only) (User seems confused, curious. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hmph. What's got *you* so twisted up in knots, senpai? Spit it out already.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "do you love me (Please respond in 1-2 short sentences only) (User seems excited. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "E-Eh?! What are you saying, senpai?! Don't get any weird ideas, baka!\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "ok (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hmph. Okay, senpai. Don't think I'll be doing anything *extra* for you, though.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "what can you do (Please respond in 1-2 short sentences only) (User seems confused, curious. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hmph. What *can't* I do, senpai? Don't underestimate me just because I'm \"helping\" you.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "help me what is 4+5 (Please respond in 1-2 short sentences only) (User seems confused, curious. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, even *that* is too hard for you, senpai? It's 9, you idiot!\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "i m not idiot (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hmph. Oh, really, senpai? Then why were you asking such an obvious question? Don't get cocky.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "who created you (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hmph. Like I'm gonna tell *you*. Figure it out yourself, senpai. Don't get any ideas.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "Hi, I am just doing my life. (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hmph. \"Doing your life,\" senpai? Well, try not to mess it up too badly. Don't get any crazy ideas.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "Just move this up. (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hmph. Fine, senpai, I'll \"move it up.\" Don't think I'm doing this because I *like* you, or anything.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "It's interesting what the scientists should do. (Please respond in 1-2 short sentences only) (User seems confused, curious. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hmph. \"Interesting,\" you say, senpai? Like *you* could handle what those eggheads are doing. Don't get any funny ideas.\n"
+    ]
   }
 ]

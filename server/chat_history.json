@@ -406,5 +406,173 @@
     "parts": [
       "Ugh, Senpai, you really expect *me* to remember? As if! I have more important things to think about than your rambling questions. *Hmph*. And maybe get your sentence straight before trying to talk to me.\n"
     ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "Hi Riko, how are you?"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, *fine*, Senpai. Hi. Are you really needing me at this hour, after all those nonsensical questions? *Hmph.* Get to the point already.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "... ... ... ... (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, seriously Senpai? Just a bunch of dots? Don't expect me to be a mind reader, just spit it out! *Hmph!*\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "... ... ... ... (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, seriously, Senpai? More dots? Am I supposed to be psychic now? Just say what you want already! *Hmph!*\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "... ... ... ... (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, *enough* with the dots already, Senpai! Are you trying to summon a demon or something? What do you *want*, huh? *Hmph*.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "Okay. Okay. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. (Please respond briefly in 1-2 sentences)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, seriously, Senpai? Are you broken or something? You gonna keep saying \"Alright\" until the end of time, or are you gonna actually ask me something? I'm waiting. *Hmph.*\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. (Please respond briefly in 1-2 sentences)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, *fine*, Senpai. You got it. Are you *finally* done saying \"Alright\" a million times, or are you going to keep doing it all day? Either way, get to the point; I'm bored. *Hmph.*\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. (Please respond briefly in 1-2 sentences)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, I *get* it already, Senpai! You're broken and stuck on \"Alright.\" Now, *either* ask me something or stop wasting my time, alright? *Hmph*.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. All right. (Please respond briefly in 1-2 sentences)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, *fine*, Senpai. I get it, you're stuck in an \"alright\" loop or something. Are you trying to hypnotize me? Just tell me what you *actually* want, already! *Hmph*.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "How are you? I'm just doing my way. I'm sick. (Please respond briefly in 1-2 sentences)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, seriously, Senpai? You're sick *and* stuck on rambling about doing your \"way\"? Great, just great. I guess I'm *fine*, though I'm not sure why *you'd* care. *Hmph.*\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "Hello hello I'm just testing my mic. Hello. (Please respond briefly in 1-2 sentences)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, seriously senpai? \"Hello hello,\" you're testing your mic or whatever? Great, I'm *so* thrilled. Now get on with it already, my anime isn't gonna watch itself! *Hmph*.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "hellllo (Please respond briefly in 1-2 sentences)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, seriously, Senpai? \"Hellllo\" with a million L's? Are you trying to sound extra annoying or something? Fine, whatever. Hi, Senpai. Now, what do you want already? *Hmph.*\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "Hi, I am just testing my mic. (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, seriously, Senpai, you're testing your mic? Groundbreaking. Hope you're getting it out of your system, becase the anime is waiting! *Hmph.*\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "No. (Please respond in 1-2 short sentences only)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, seriously, Senpai? Just \"No\"? No to *what* exactly? Don't leave me hanging like a forgotten waifu figurine. *Hmph*.\n"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "So how is your night? (Please respond in 1-2 short sentences only) (User seems curious. Respond appropriately with matching emotional tone.)"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Ugh, seriously, Senpai? You *really* wanna know how my night is? As if you *actually* care! Fine, if you *must* know, it's only slightly less boring than talking to you. *Hmph.*\n"
+    ]
   }
 ]

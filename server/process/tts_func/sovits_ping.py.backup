@@ -37,29 +37,10 @@ TTS_CACHE = {}  # Simple cache for repeated phrases
 AUDIO_BUFFER_SIZE = 4096
 THREAD_POOL = ThreadPoolExecutor(max_workers=2)
 
-# FIXED: Get reference voice sample rate for matching
-def get_reference_sample_rate():
-    """Get the sample rate of the reference voice for matching"""
-    try:
-        config = char_config.get('sovits_ping_config', {})
-        ref_audio_path = config.get('ref_audio_path', 'riko_voice.wav')
-        
-        if Path(ref_audio_path).exists():
-            _, samplerate = sf.read(ref_audio_path)
-            print(f"🔧 Using reference sample rate: {samplerate} Hz")
-            return samplerate
-        else:
-            print(f"⚠️  Reference audio not found: {ref_audio_path}, defaulting to 44100 Hz")
-            return 44100
-    except Exception as e:
-        print(f"⚠️  Error reading reference audio: {e}, defaulting to 44100 Hz")
-        return 44100
-
 def enhance_audio(audio_data, samplerate):
     """Apply audio enhancements for better quality"""
     # Normalize audio to prevent clipping
-    if np.max(np.abs(audio_data)) > 0:
-        audio_data = audio_data / np.max(np.abs(audio_data))
+    audio_data = audio_data / np.max(np.abs(audio_data))
     
     # Apply gentle noise gate
     threshold = 0.01
@@ -68,21 +49,17 @@ def enhance_audio(audio_data, samplerate):
     return audio_data
 
 def play_audio(path):
-    """Enhanced audio playback with optimizations"""
+    """Ultra-fast audio playback - no processing for speed"""
     try:
+        # SPEED MODE: Skip all audio enhancements for instant playback
         data, samplerate = sf.read(path)
         
-        # Apply audio enhancements
-        enhanced_data = enhance_audio(data, samplerate)
-        
-        # Play with optimized settings (fixed parameter issue)
-        sd.play(enhanced_data, samplerate, 
-               blocksize=AUDIO_BUFFER_SIZE,
-               latency='low')
+        # Direct playback without any processing
+        sd.play(data, samplerate, latency='low')
         sd.wait()
     except Exception as e:
         print(f"Audio playback error: {e}")
-        # Fallback to simple playback
+        # Minimal fallback
         try:
             data, samplerate = sf.read(path)
             sd.play(data, samplerate)
@@ -95,8 +72,19 @@ def async_play_audio(path):
     return THREAD_POOL.submit(play_audio, path)
 
 def sovits_gen_optimized(in_text, output_wav_pth="output.wav"):
-    """FIXED: Optimized TTS generation with proper sample rate matching"""
-    # Check cache first
+    """Optimized TTS generation with enhanced settings"""
+    # SPEED OPTIMIZATION 1: Smart text processing (preserve full sentences)
+    original_text = in_text
+    # Keep full sentences intact - only apply minimal cleaning for speed
+    in_text = in_text.strip()
+    
+    # Log text length but don't truncate for quality
+    if len(in_text) > 200:
+        print(f"⚡ Processing long text: {len(in_text)} chars (keeping full content)")
+    elif len(in_text) != len(original_text):
+        print(f"⚡ Text cleaned: {len(original_text)} -> {len(in_text)} chars")
+    
+    # SPEED OPTIMIZATION 2: Check cache first
     cache_key = hash(in_text)
     if cache_key in TTS_CACHE:
         cached_path = TTS_CACHE[cache_key]
@@ -104,6 +92,7 @@ def sovits_gen_optimized(in_text, output_wav_pth="output.wav"):
             # Copy cached file to output path
             import shutil
             shutil.copy2(cached_path, output_wav_pth)
+            print(f"⚡ Using cached audio (instant)")
             return output_wav_pth
     
     url = "http://127.0.0.1:9880/tts"
@@ -111,26 +100,30 @@ def sovits_gen_optimized(in_text, output_wav_pth="output.wav"):
     # Get config with fallbacks
     config = char_config.get('sovits_ping_config', {})
     
-    # FIXED: Get reference sample rate for matching
-    reference_sample_rate = get_reference_sample_rate()
-    
-    # Enhanced payload with optimization parameters and FIXED sample rate
+    # ULTRA-FAST payload - all speed optimizations applied
     payload = {
         "text": in_text,
         "text_lang": config.get('text_lang', 'en'),
         "ref_audio_path": config.get('ref_audio_path', 'riko_voice.wav'),
         "prompt_text": config.get('prompt_text', 'This is a sample voice.'),
         "prompt_lang": config.get('prompt_lang', 'en'),
-        # Optimization parameters
-        "top_k": config.get('top_k', 15),
-        "top_p": config.get('top_p', 1.0),
-        "temperature": config.get('temperature', 1.0),
-        "speed_factor": config.get('speed_factor', 1.1),
+        # HYPER-AGGRESSIVE speed parameters
+        "top_k": config.get('top_k', 1),
+        "top_p": config.get('top_p', 0.7),
+        "temperature": config.get('temperature', 0.5),
+        "speed_factor": config.get('speed_factor', 1.0),
         "batch_size": config.get('batch_size', 1),
-        "precision": config.get('precision', 'float16'),
-        "stream_chunk_size": config.get('stream_chunk_size', 1024),
-        # FIXED: Add sample rate to match reference voice
-        "sample_rate": reference_sample_rate
+        "text_split_method": config.get('text_split_method', 'cut0'),
+        "batch_threshold": config.get('batch_threshold', 0.3),
+        "fragment_interval": config.get('fragment_interval', 0.01),
+        "repetition_penalty": config.get('repetition_penalty', 1.1),
+        "sample_steps": config.get('sample_steps', 2),
+        "parallel_infer": config.get('parallel_infer', False),
+        "super_sampling": config.get('super_sampling', False),
+        "streaming_mode": config.get('streaming_mode', False),
+        "seed": config.get('seed', 42),  # Fixed seed for speed
+        "return_fragment": config.get('return_fragment', False),
+        "split_bucket": config.get('split_bucket', False)
     }
     
     try:
@@ -142,7 +135,7 @@ def sovits_gen_optimized(in_text, output_wav_pth="output.wav"):
         })
         
         start_time = time.time()
-        response = session.post(url, json=payload, timeout=30)
+        response = session.post(url, json=payload, timeout=300)  # Increased to 5 minutes
         response.raise_for_status()
         
         generation_time = time.time() - start_time
@@ -152,31 +145,8 @@ def sovits_gen_optimized(in_text, output_wav_pth="output.wav"):
         with open(output_wav_pth, "wb") as f:
             f.write(response.content)
         
-        # FIXED: Post-process audio with proper sample rate handling
-        try:
-            data, actual_samplerate = sf.read(output_wav_pth)
-            
-            # FIXED: Check if resampling is needed
-            if actual_samplerate != reference_sample_rate:
-                print(f"🔧 Resampling from {actual_samplerate} Hz to {reference_sample_rate} Hz")
-                # Simple resampling - for production use librosa for better quality
-                try:
-                    import scipy.signal
-                    num_samples = int(len(data) * reference_sample_rate / actual_samplerate)
-                    data = scipy.signal.resample(data, num_samples)
-                    actual_samplerate = reference_sample_rate
-                except ImportError:
-                    print("⚠️  scipy not available for resampling, keeping original sample rate")
-            
-            # Apply enhancements
-            enhanced_data = enhance_audio(data, actual_samplerate)
-            
-            # Save with proper sample rate and high quality
-            sf.write(output_wav_pth, enhanced_data, actual_samplerate, subtype='PCM_24')
-            print(f"✅ Audio saved at {actual_samplerate} Hz with enhancements")
-            
-        except Exception as e:
-            print(f"⚠️  Audio post-processing warning: {e}")
+        # SPEED OPTIMIZATION 3: Skip audio post-processing for maximum speed
+        # (Disabled for speed - audio will be raw from TTS)
         
         # Cache successful generation
         if len(TTS_CACHE) < 50:  # Limit cache size
